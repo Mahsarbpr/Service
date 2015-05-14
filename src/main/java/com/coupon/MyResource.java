@@ -34,17 +34,26 @@ public class MyResource {
      * @return String that will be returned as a text/plain response.
      */
 
-	@POST
-	@Path("coupon")
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@GET
+	@Path("/CreateCoupon/{CouponID}/{Discount}")
 	@Produces({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON})
-	public String CreateCoupon(MultivaluedMap<String, String> couponparams){
-		System.out.println(couponparams.getFirst("CouponID"));
-		System.out.println(couponparams.getFirst("Discount"));
+	public String CreateCoupon(@PathParam("CouponID") int CouponID, @PathParam("Discount") int Discount){
 		Coupon C= new Coupon();
-		C.setCouponID(Integer.parseInt(couponparams.getFirst("CouponID")));
-		C.setDiscount(Integer.parseInt(couponparams.getFirst("Discount")));
+		C.setCouponID(CouponID);
+		C.setDiscount(Discount);
 		
+		Statement stmt = null;
+		DB database = new DB();
+		try{
+		Connection c=database.connect();
+		stmt=(Statement) c.createStatement();
+		String query = "INSERT INTO coupon VALUES ("+C.CouponID+","+C.Discount+")";
+		stmt.executeUpdate(query);
+		}
+		catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return null;
 	}
 	
