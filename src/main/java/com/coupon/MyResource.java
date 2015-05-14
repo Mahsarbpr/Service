@@ -34,17 +34,29 @@ public class MyResource {
      * @return String that will be returned as a text/plain response.
      */
 
-	@POST
-	@Path("coupon")
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@GET
+	@Path("/SaveCoupon/{CouponID}/{Discount}")
 	@Produces({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON})
-	public String CreateCoupon(MultivaluedMap<String, String> couponparams){
-		System.out.println(couponparams.getFirst("CouponID"));
-		System.out.println(couponparams.getFirst("Discount"));
+	public String CreateCoupon(@PathParam("CouponID") int CouponID, @PathParam("Discount") int Discount){
+		//System.out.println(couponparams.getFirst("CouponID"));
+		//System.out.println(couponparams.getFirst("Discount"));
 		Coupon C= new Coupon();
-		C.setCouponID(Integer.parseInt(couponparams.getFirst("CouponID")));
-		C.setDiscount(Integer.parseInt(couponparams.getFirst("Discount")));
+		C.setCouponID(CouponID);
+		C.setDiscount(Discount);
 		
+		Statement stmt = null;
+    	DB database = new DB();
+    	try {
+    		Connection c= database.connect();
+			stmt = (Statement) c.createStatement();
+			String query = "INSERT INTO coupon Values ("+C.CouponID+","+C.Discount+")";
+			stmt.executeUpdate(query);
+			stmt.close();
+    	}
+    	catch(SQLException sqe)
+    	{
+    	System.out.println(sqe);
+    	} 
 		return null;
 	}
 	
@@ -61,6 +73,7 @@ public class MyResource {
     	Statement stmt = null;
 		ResultSet rs = null;
     	DB database = new DB();
+    	Coupon C2 = new Coupon();
     	int IC=Integer.parseInt(salam);
     	try {
     		Connection c= database.connect();
@@ -68,12 +81,8 @@ public class MyResource {
 			String query = "SELECT Promotion FROM coupon where id="+IC;
 			rs = (ResultSet) stmt.executeQuery("SELECT Promotion FROM coupon where id="+IC);
 			while (rs.next()) {
-				String Promotion = rs.getString("Promotion");
-				return "The Promotion is "+ Promotion;
-//				String firstName = rs.getString("first_name");
-//				String lastName = rs.getString("last_name");
-//				System.out.println("ID: " + id + ", First Name: " + firstName
-//						+ ", Last Name: " + lastName);
+				C2.Discount = Integer.parseInt(rs.getString("Promotion"));
+				return "The Promotion is "+ C2.Discount;
 			}
 			
 		} catch (SQLException e) {
@@ -82,11 +91,6 @@ public class MyResource {
 		}
     	
     	return "END OF THE FUNCTION";
-//    	 	int num=123;
-//    	if (IC==num)
-//    		return "True";
-//    	else 
-//    		return "False";
     }
     
 }
