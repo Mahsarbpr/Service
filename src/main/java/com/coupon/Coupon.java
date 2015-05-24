@@ -5,8 +5,8 @@ public class Coupon {
 public int CouponID;
 public int Discount;
 int CouponType; //There should be better option for defining Coupon Type
-Date ValidTime1 = new Date();
-Date ValidTime2 = new Date();
+Date ValidTime1;// = new Date();
+Date ValidTime2;// = new Date();
 public int getCouponID() {
 	return CouponID;
 }
