@@ -39,38 +39,34 @@ public class MyResource {
      *
      * @return String that will be returned as a text/plain response.
      */
-
-	//@GET
-	//@Path("/CreateCoupon/{CouponID}/{Discount}")
-	//@Produces({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON})
+	
 	@POST
 	@Path("CreateCoupon")
 	@Produces(MediaType.TEXT_HTML)
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public void CreateCoupon(@FormParam("ID") String id,
-			@FormParam("discount") String discount,
-			@FormParam("type") String type,
-		//	@FormParam("time1") Date time1,
-		//	@FormParam("time2") Date time2,
-			@Context HttpServletResponse servletResponse) throws IOException {
+	public void CreateCoupon(@FormParam("ID") int CouponID, @FormParam("discount") int Discount,
+			@FormParam("type") int CouponType, 
+			@Context HttpServletResponse servletResponse) throws IOException{
+		//System.out.println(couponparams.getFirst("CouponID"));
+		//System.out.println(couponparams.getFirst("Discount"));
 		Coupon C= new Coupon();
-		C.setCouponID(Integer.parseInt(id));
-		C.setDiscount(Integer.parseInt(discount));
-		C.setCouponType(Integer.parseInt(type));
-		//C.setValidTime1(time1);
-		//C.setValidTime2(time2);
+		C.setCouponID(CouponID);
+		C.setDiscount(Discount);
+		C.setCouponType(CouponType);
+		
 		Statement stmt = null;
-		DB database = new DB();
-		try{
-		Connection c=database.connect();
-		stmt=(Statement) c.createStatement();
-		String query = "INSERT INTO coupon VALUES ("+C.CouponID+","+C.Discount+","+C.CouponType+")";
-		stmt.executeUpdate(query);
-		}
-		catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    	DB database = new DB();
+    	try {
+    		Connection c= database.connect();
+			stmt = (Statement) c.createStatement();
+			String query = "INSERT INTO coupon Values ("+C.CouponID+","+C.Discount+","+C.CouponType+")";
+			stmt.executeUpdate(query);
+			//stmt.close();
+    	}
+    	catch(SQLException e)
+    	{
+    		e.printStackTrace();
+    	} 
 	}
 	
 	@GET
@@ -117,6 +113,7 @@ public class MyResource {
     	Statement stmt = null;
 		ResultSet rs = null;
     	DB database = new DB();
+    	Coupon C2 = new Coupon();
     	int IC=Integer.parseInt(salam);
     	try {
     		Connection c= database.connect();
@@ -124,12 +121,8 @@ public class MyResource {
 			String query = "SELECT Promotion FROM coupon where id="+IC;
 			rs = (ResultSet) stmt.executeQuery("SELECT Promotion FROM coupon where id="+IC);
 			while (rs.next()) {
-				String Promotion = rs.getString("Promotion");
-				return "The Promotion is "+ Promotion;
-//				String firstName = rs.getString("first_name");
-//				String lastName = rs.getString("last_name");
-//				System.out.println("ID: " + id + ", First Name: " + firstName
-//						+ ", Last Name: " + lastName);
+				C2.Discount = Integer.parseInt(rs.getString("Promotion"));
+				return "The Promotion is "+ C2.Discount;
 			}
 			
 		} catch (SQLException e) {
@@ -138,11 +131,6 @@ public class MyResource {
 		}
     	
     	return "END OF THE FUNCTION";
-//    	 	int num=123;
-//    	if (IC==num)
-//    		return "True";
-//    	else 
-//    		return "False";
     }
     
 }
