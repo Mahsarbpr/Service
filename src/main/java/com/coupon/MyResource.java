@@ -16,6 +16,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
@@ -75,24 +76,28 @@ public class MyResource {
         return "Got it!";
     }
 //////////////////////////////////////////////////////////////////////////////////////////
-    @POST
-    @Path("readcoupon")
-    @Produces({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON})   
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public void ReadCoupon(@FormParam ("ID") String id){
+   // @POST
+    @GET
+	@Path("readcoupon/{ID}")
+    @Produces({MediaType.TEXT_XML, MediaType.APPLICATION_JSON})   
+  //  @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public Coupon ReadCoupon(@PathParam ("ID") String id){
+    	Coupon co=new Coupon();	
     	Statement stmt = null;
 		ResultSet rs = null;
     	DB database = new DB();
     	int IC=Integer.parseInt(id);
+    	co.CouponID=IC;
     	try {
     		Connection c= database.connect();
 			stmt = (Statement) c.createStatement();
 //			String query = "SELECT Promotion FROM coupon where id="+IC;
 			rs = (ResultSet) stmt.executeQuery("SELECT discount , type from coupon where id="+IC);
 			while (rs.next()) {
-				int discount = rs.getInt("discount");
-				int type = rs.getInt("type");
-				System.out.println("The discount is "+ discount+ "type is"+ type);
+				co.Discount = rs.getInt("discount");
+				co.CouponType = rs.getInt("type");
+				//return co;
+				//System.out.println("The discount is "+ discount+ "type is"+ type);
 //				String firstName = rs.getString("first_name");
 //				String lastName = rs.getString("last_name");
 //				System.out.println("ID: " + id + ", First Name: " + firstName
@@ -103,13 +108,14 @@ public class MyResource {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return co;
     	}
 	//SELECT discount , type from coupon where id=12 
     ///////////////////////////////////////////////////////////////////////////////////////
 	@GET
     @Produces({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON})
     @Path("{salam}")
-    public String Check(@PathParam ("salam") String salam){
+    public String Check1(@PathParam ("salam") String salam){
     	Statement stmt = null;
 		ResultSet rs = null;
     	DB database = new DB();
@@ -133,4 +139,93 @@ public class MyResource {
     	return "END OF THE FUNCTION";
     }
     
+//////////////////////////////////////////////////////////////////////////////////////////
+@GET
+@Produces({MediaType.TEXT_XML, MediaType.APPLICATION_JSON})
+@Path("get")
+public Coupon Check2(){
+	Statement stmt = null;
+	ResultSet rs = null;
+	DB database = new DB();
+	Coupon C2 = new Coupon();
+	C2.CouponID = 11;
+	int IC=11;
+	try {
+		Connection c= database.connect();
+		stmt = (Statement) c.createStatement();
+		String query = "SELECT Promotion FROM coupon where id="+IC;
+		rs = (ResultSet) stmt.executeQuery("SELECT discount , type from coupon where id="+IC);
+		while (rs.next()) {
+			C2.Discount = Integer.parseInt(rs.getString("Discount"));
+			C2.CouponType =Integer.parseInt(rs.getString("Type"));
+			return C2;
+		}
+		
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+	return C2;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+@GET
+@Produces({MediaType.TEXT_XML, MediaType.APPLICATION_JSON})
+@Path("get/{var}")
+public Coupon Check3(@PathParam("var") int var ){
+	Statement stmt = null;
+	ResultSet rs = null;
+	DB database = new DB();
+	Coupon C2 = new Coupon();
+	C2.CouponID = var;
+	int IC=var;
+	try {
+		Connection c= database.connect();
+		stmt = (Statement) c.createStatement();
+		//String query = "SELECT Promotion FROM coupon where id="+IC;
+		rs = (ResultSet) stmt.executeQuery("SELECT discount , type from coupon where id="+IC);
+		while (rs.next()) {
+			C2.Discount = Integer.parseInt(rs.getString("discount"));
+			C2.CouponType =Integer.parseInt(rs.getString("type"));
+			return C2;
+		}
+		
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+	return C2;
+}
+///////////////////////////////////////////////////////////////////////////////////////
+@GET
+@Consumes(MediaType.TEXT_PLAIN)
+@Produces({MediaType.TEXT_XML, MediaType.APPLICATION_JSON})
+@Path("get")
+public Coupon Check4(@QueryParam("var") int var ){
+	Statement stmt = null;
+	ResultSet rs = null;
+	DB database = new DB();
+	Coupon C2 = new Coupon();
+	C2.CouponID = var;
+	int IC=var;
+	try {
+		Connection c= database.connect();
+		stmt = (Statement) c.createStatement();
+		//String query = "SELECT Promotion FROM coupon where id="+IC;
+		rs = (ResultSet) stmt.executeQuery("SELECT discount , type from coupon where id="+IC);
+		while (rs.next()) {
+			C2.Discount = Integer.parseInt(rs.getString("discount"));
+			C2.CouponType =Integer.parseInt(rs.getString("type"));
+			return C2;
+		}
+		
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+	return C2;
+}
 }

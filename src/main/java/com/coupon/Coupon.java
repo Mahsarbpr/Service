@@ -1,6 +1,8 @@
 package com.coupon;
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlRootElement;
+@XmlRootElement
 public class Coupon {
 public int CouponID;
 public int Discount;

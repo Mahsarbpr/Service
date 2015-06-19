@@ -7,14 +7,18 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="rcservlet"><!-- method="get"> -->
+	<div style="padding-left:100px;font-family: monospace;">
 		<h2>Read Coupon</h2>
+		<form action="http://localhost:8080/coupon-service/webapi/myresource/ReadCoupon/ID" method="post">
+			<div style="width: 200px; text-align: left;">
 				<div style="padding:10px;">
 					Coupon ID: <input name="ID" />
 				</div>
 				<div style="padding:10px;text-align:center">
 					<input type="submit" value="Submit" />
 				</div>
-	</form>
+			</div>
+		</form>
+	</div>
 </body>
 </html>

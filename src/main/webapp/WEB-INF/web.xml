@@ -15,5 +15,13 @@
         <servlet-name>Jersey Web Application</servlet-name>
         <url-pattern>/webapi/*</url-pattern>
     </servlet-mapping> 
+	<servlet>
+    <servlet-name>rcservlet</servlet-name>
+  	<servlet-class>com.coupon.ReadCouponServlet</servlet-class>
+  	</servlet>
+  	<servlet-mapping>
+  	<servlet-name>rcservlet</servlet-name>
+  	<url-pattern>/rcservlet</url-pattern>
+  	</servlet-mapping>
   </web-app>
 
