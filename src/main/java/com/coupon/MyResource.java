@@ -228,4 +228,5 @@ public Coupon Check4(@QueryParam("var") int var ){
 	
 	return C2;
 }
+
 }

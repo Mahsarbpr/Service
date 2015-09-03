@@ -15,10 +15,13 @@ public class ReadCouponServlet extends HttpServlet{
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int ID= Integer.parseInt(request.getParameter("ID"));
+
+		String SID=request.getParameter("ID");
+		if(SID != null && SID !=""){
+		int IID= Integer.parseInt(request.getParameter("ID")); //error handling if ID is null, how to?
 		PrintWriter out = response.getWriter();//chi kar mikone?
 		Client client= ClientBuilder.newClient();
-		Coupon cc=client.target("http://localhost:8080/coupon-service/webapi/myresource/get").queryParam("var",ID).request().get(Coupon.class);
+		Coupon cc=client.target("http://localhost:8080/coupon-service/webapi/myresource/get").queryParam("var",IID).request().get(Coupon.class);
 		out.println (
                   "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" +" +
                       "http://www.w3.org/TR/html4/loose.dtd\">\n" +
@@ -34,5 +37,11 @@ public class ReadCouponServlet extends HttpServlet{
                     "</font></body> \n" +
                   "</html>" 
                 );      
-        }
-}
+        
+	}
+		else {
+	//response.getWriter().write("enter the ID");	
+			response.sendRedirect("ReadCoupon.jsp");
+	}
+	}
+	}
