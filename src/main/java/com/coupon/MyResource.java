@@ -45,7 +45,7 @@ public class MyResource {
 	@Path("CreateCoupon")
 	@Produces(MediaType.TEXT_HTML)
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public void CreateCoupon(@FormParam("ID") int CouponID, @FormParam("discount") int Discount,
+	public void CreateCoupon(@FormParam("ID") int CouponID, @FormParam("discount") double Discount,
 			@FormParam("type") int CouponType, 
 			@Context HttpServletResponse servletResponse) throws IOException{
 		//System.out.println(couponparams.getFirst("CouponID"));
@@ -94,7 +94,7 @@ public class MyResource {
 //			String query = "SELECT Promotion FROM coupon where id="+IC;
 			rs = (ResultSet) stmt.executeQuery("SELECT discount , type from coupon where id="+IC);
 			while (rs.next()) {
-				co.Discount = rs.getInt("discount");
+				co.Discount = rs.getDouble("discount");
 				co.CouponType = rs.getInt("type");
 				//return co;
 				//System.out.println("The discount is "+ discount+ "type is"+ type);
@@ -127,7 +127,7 @@ public class MyResource {
 			String query = "SELECT Promotion FROM coupon where id="+IC;
 			rs = (ResultSet) stmt.executeQuery("SELECT Promotion FROM coupon where id="+IC);
 			while (rs.next()) {
-				C2.Discount = Integer.parseInt(rs.getString("Promotion"));
+				C2.Discount = Double.parseDouble(rs.getString("Promotion"));
 				return "The Promotion is "+ C2.Discount;
 			}
 			
@@ -153,10 +153,10 @@ public Coupon Check2(){
 	try {
 		Connection c= database.connect();
 		stmt = (Statement) c.createStatement();
-		String query = "SELECT Promotion FROM coupon where id="+IC;
+		String query = "SELECT discount FROM coupon where id="+IC;
 		rs = (ResultSet) stmt.executeQuery("SELECT discount , type from coupon where id="+IC);
 		while (rs.next()) {
-			C2.Discount = Integer.parseInt(rs.getString("Discount"));
+			C2.Discount = Double.parseDouble(rs.getString("Discount"));
 			C2.CouponType =Integer.parseInt(rs.getString("Type"));
 			return C2;
 		}
@@ -186,7 +186,7 @@ public Coupon Check3(@PathParam("var") int var ){
 		//String query = "SELECT Promotion FROM coupon where id="+IC;
 		rs = (ResultSet) stmt.executeQuery("SELECT discount , type from coupon where id="+IC);
 		while (rs.next()) {
-			C2.Discount = Integer.parseInt(rs.getString("discount"));
+			C2.Discount = Double.parseDouble(rs.getString("discount"));
 			C2.CouponType =Integer.parseInt(rs.getString("type"));
 			return C2;
 		}
@@ -216,7 +216,7 @@ public Coupon Check4(@QueryParam("var") int var ){
 		//String query = "SELECT Promotion FROM coupon where id="+IC;
 		rs = (ResultSet) stmt.executeQuery("SELECT discount , type from coupon where id="+IC);
 		while (rs.next()) {
-			C2.Discount = Integer.parseInt(rs.getString("discount"));
+			C2.Discount = Double.parseDouble(rs.getString("discount"));
 			C2.CouponType =Integer.parseInt(rs.getString("type"));
 			return C2;
 		}

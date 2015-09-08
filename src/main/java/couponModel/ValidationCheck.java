@@ -38,28 +38,26 @@ public class ValidationCheck extends HttpServlet {
 	int iVId= Integer.parseInt(vId);
 	Client client= ClientBuilder.newClient();
 	Coupon vcc=client.target("http://localhost:8080/coupon-service/webapi/myresource/get").queryParam("var",iVId).request().get(Coupon.class);
-	DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+	
 	Date date = new Date();
-	
+	DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 	//SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-	Date date1 = dateFormat.parse("2009-12-31");
-	Date date2 = dateFormat.parse("2010-01-31");
-
-	System.out.println(sdf.format(date1));
-	System.out.println(sdf.format(date2));
+	//Date date1 = dateFormat.parse(vcc.Valid);
+	//Date date2 = dateFormat.parse("2010-01-31");
+	//String currentdate = dateFormat.format(date);
 	
-	if(date1.compareTo(date2)>0){
-		System.out.println("Date1 is after Date2");
-	}else if(date1.compareTo(date2)<0){
-		System.out.println("Date1 is before Date2");
-	}else if(date1.compareTo(date2)==0){
-		System.out.println("Date1 is equal to Date2");
-	}else{
-		System.out.println("How to get here?");
-	System.out.println(dateFormat.format(date));
-			}
+	Date Cdate1= vcc.getValidTime1();
+	Date Cdate2= vcc.getValidTime2();
+	
+	
+	if(Cdate1.compareTo(date)<=0 && Cdate2.compareTo(date)>=0 ){
+		System.out.println("valid coupon");
 	}
-
+	else{
+		System.out.println("not valid coupon");
+	}
+	}
+	}
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */

@@ -7,7 +7,7 @@
 <title>Cart 1</title>
 </head>
 <body>
-<form action="cpservlet">
+<form action="CP">
  item1: <input type="text" name="itm1">
  price: <input type="text" name="pitm1">
   <br>

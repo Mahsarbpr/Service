@@ -50,9 +50,9 @@ public class ComputePrice extends HttpServlet {
 		Coupon cc=client.target("http://localhost:8080/coupon-service/webapi/myresource/get").queryParam("var",Iitem).request().get(Coupon.class);
 		Coupon cc2=client.target("http://localhost:8080/coupon-service/webapi/myresource/get").queryParam("var",Iitem2).request().get(Coupon.class);
 		
-		int totalprice= Ipitem1*cc.Discount + Ipitem2*cc2.Discount;
-		String Stp= Integer.toString(totalprice);
-		out.println("hellloooooo");
+		double totalprice= Ipitem1*cc.Discount + Ipitem2*cc2.Discount;
+		String Stp= Double.toString(totalprice);
+		out.println(Stp);
 		//	request.setAttribute("tp", Stp);
 	//	request.getRequestDispatcher("Cart1.jsp").forward(request, response); 
 		}

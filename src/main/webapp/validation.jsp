@@ -8,9 +8,8 @@
 </head>
 <body>
 <form action="ValidationCheck">
-coupon ID: <input type="text" id="VC" name="valCo">
-
-
+coupon ID: <input type="text" name="VC" >
+<input type="submit">
 </form>
 </body>
 </html>

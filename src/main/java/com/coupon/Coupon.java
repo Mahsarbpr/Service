@@ -5,8 +5,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Coupon {
 public int CouponID;
-public int Discount;
-int CouponType; //There should be better option for defining Coupon Type
+public double Discount;
+public int CouponType; //There should be better option for defining Coupon Type
 Date ValidTime1;// = new Date();
 Date ValidTime2;// = new Date();
 public int getCouponID() {
@@ -15,10 +15,10 @@ public int getCouponID() {
 public void setCouponID(int couponID) {
 	CouponID = couponID;
 }
-public int getDiscount() {
+public double getDiscount() {
 	return Discount;
 }
-public void setDiscount(int discount) {
+public void setDiscount(double discount) {
 	Discount = discount;
 }
 public int getCouponType() {

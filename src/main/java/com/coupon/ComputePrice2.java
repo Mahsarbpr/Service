@@ -17,7 +17,6 @@ public class ComputePrice2 extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-	response.getWriter().write("Hellooooo");
 	String Sitem= request.getParameter("itm1");
 	String Sitem2= request.getParameter("itm2");
 	String Spitem1= request.getParameter("pitm1");
@@ -34,13 +33,14 @@ public class ComputePrice2 extends HttpServlet{
 		Coupon cc=client.target("http://localhost:8080/coupon-service/webapi/myresource/get").queryParam("var",Iitem).request().get(Coupon.class);
 		Coupon cc2=client.target("http://localhost:8080/coupon-service/webapi/myresource/get").queryParam("var",Iitem2).request().get(Coupon.class);
 		
-		int totalprice= Ipitem1*cc.Discount + Ipitem2*cc2.Discount;
-		String Stp= Integer.toString(totalprice);
-		out.println("hellloooooo");
+		double totalprice= Ipitem1*cc.Discount + Ipitem2*cc2.Discount;
+		String Stp= Double.toString(totalprice);
+		out.println(Stp);
 		//	request.setAttribute("tp", Stp);
 	//	request.getRequestDispatcher("Cart1.jsp").forward(request, response); 
 				}   
 	else{
 		response.sendRedirect("Cart1.jsp");
+	}
 	}
 }

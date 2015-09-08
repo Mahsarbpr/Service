@@ -12,7 +12,7 @@ public class CouponClient {
 	public CouponClient () {
 		client = ClientBuilder.newClient();
 	}
-	public int get (String CouponID){
+	public double get (String CouponID){
 		
 	WebTarget target= client.target("http://localhost:8080/coupon-service/webapi/myresource/");	
 	Coupon response = target.path(CouponID).request(MediaType.TEXT_PLAIN).get(Coupon.class);
