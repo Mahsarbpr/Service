@@ -42,7 +42,7 @@ public class login extends HttpServlet {
 		String u= request.getParameter("username");
 		String p= request.getParameter("password");
 		Connection c=null;
-		//if( u!=null && p!=null){
+		if( u!=null && p!=null){
 			try {
 			PreparedStatement stmt = null;
 			ResultSet rs = null;
@@ -55,25 +55,23 @@ public class login extends HttpServlet {
 			if(stmt.executeQuery()!=null)
 			{
 				rs=stmt.executeQuery();
-			//rs = (ResultSet) stmt.executeQuery("SELECT DISTINCT username, password, UOrAOrC FROM user WHERE username=? AND password=?");
 				if(rs.next()){
-					if(rs.getString("UOrAOrC")=="U"){
+					if(rs.getString("UOrAOrC").equals("U")){
 						response.sendRedirect("CustomerPage.jsp");	
 					}
-					else{
-						if(rs.getString("UOrAOrC")=="A")
+						if(rs.getString("UOrAOrC").equals("A"))
 							response.sendRedirect("CRUD.jsp");
-						if(rs.getString("UOrAOrC")=="C")
+						if(rs.getString("UOrAOrC").equals("C"))
 							response.sendRedirect("UserPage.jsp");
 					}
-					}
 			}
-			else{
-				response.sendRedirect("HomeCoupon.jsp");}
 			}
+			//else{
+				//response.sendRedirect("HomeCoupon.jsp");}
+			//}
 			catch(Exception e) {
 			    System.out.println("validateLogon: Error while validating password: "+e.getMessage());
 			  } 
 	}
-
+	}
 }
