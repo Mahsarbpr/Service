@@ -8,7 +8,7 @@
 <body>
 	<div style="padding-left:100px;font-family: monospace;">
 		<h2>Create Coupon</h2>
-		<form action="http://localhost:8080/coupon-service/webapi/myresource/CreateCoupon" method="POST">
+		<form action="" method="POST">
 			<div style="width: 200px; text-align: left;">
 				<div style="padding:10px;">
 					Coupon ID: <input name="ID" />
@@ -18,6 +18,18 @@
 				</div>
 				<div style="padding:10px;">
 					Coupon Type: <input name="type" />
+				</div>
+				<div style="padding:10px;">
+					Item name: <input name="Itmnm" />
+				</div>
+				<div style="padding:10px;">
+					Item name: <input name="Itmid" />
+				</div>
+				<div style="padding:10px;">
+					Coupon Start Time: <input name="Addtime1" />
+				</div>
+				<div style="padding:10px;">
+					Coupon Expiration Time: <input name="Addtime2" />
 				</div>
 				<div style="padding:10px;text-align:center">
 					<input type="submit" value="Submit" />

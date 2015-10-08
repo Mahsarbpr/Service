@@ -52,9 +52,13 @@ public class ComputePrice extends HttpServlet {
 		
 		double totalprice= Ipitem1*cc.Discount + Ipitem2*cc2.Discount;
 		String Stp= Double.toString(totalprice);
-		out.println(Stp);
-		//	request.setAttribute("tp", Stp);
-	//	request.getRequestDispatcher("Cart1.jsp").forward(request, response); 
+		//out.println(Stp);
+		request.setAttribute("itm1", Iitem);
+		request.setAttribute("pitm1", Ipitem1);
+		request.setAttribute("itm2", Iitem2);
+		request.setAttribute("pitm2", Ipitem2);
+		request.setAttribute("tp", Stp);
+		request.getRequestDispatcher("Cart1.jsp").forward(request, response); 
 		}
 		finally{
 			System.out.println("blablablaaaa");

@@ -52,7 +52,7 @@
 <div class="container">
 <div class="row">
 <div class="col-md-6 col-md-offset-3 panel panel-default">
-<h1 class="margin-base-vertical">Admin Page:</h1>
+<h1 class="margin-base-vertical">Customer Page:</h1>
 	
 	<form role="form" action="ReadCoupon.jsp" method="Post">
     <p class="text-center">
@@ -75,30 +75,6 @@
 	<form role="form" action="AvailableCoupons.jsp" method="Post">
     <p class="text-center">
     <input type="submit" class="btn-success btn-lg custom" value="Check for Available coupons">
-	</p>
-	</form>
-	
-	<form role="form" action="AddCoupon.jsp" method="Post">
-    <p class="text-center">
-    <input type="submit" class="btn-success btn-lg custom" value="Add Coupon">
-    </p>
-	</form>
-	
-	<form role="form" action="UploadCouponPackage.jsp" method="Post">
-    <p class="text-center">
-    <input type="submit" class="btn-success btn-lg custom" value="Upload Coupon Package">
-	</p>
-	</form>
-	
-	<form role="form" action="UpdateCoupon.jsp" method="Post">
- 	<p class="text-center">
- 	<input type="submit" class="btn-success btn-lg custom" value="Update Coupon">
-	</p>
-	</form>
-	
-	<form role="form" action="DeleteCoupon.jsp" method="Post">
- 	<p class="text-center">
- 	<input type="submit" class="btn-success btn-lg custom" value="Delete Coupon">
 	</p>
 	</form>
 </div><!-- //main content -->
