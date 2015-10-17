@@ -7,6 +7,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -40,62 +41,284 @@ public class AvailableCoupons extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String SDT=request.getParameter("DT");
-		// SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		// Date convertedCurrentDate = sdf.parse(SDT);
-		////java.util.Date date=null;
-		 //String date=null;
-		if(SDT != null && SDT !=""){
-		////try {
-			////date=new SimpleDateFormat("yyyy-MM-dd").parse(SDT);
-			//date = sdf.format(sdf.parse(SDT));
-		////} catch (ParseException e1) {
-			// TODO Auto-generated catch block
-			//e1.printStackTrace();
-			    // Show error message to enduser about the wrong format and forward back to the JSP with the form.
-			////    request.setAttribute("error", "Invalid format, please enter yyyy-MM-dd");
-			   //// request.getRequestDispatcher("AvailableCoupons.jsp").forward(request, response);
-			    ////return;
-	
-		////}
-		 ////System.out.println(date);
-		request.setAttribute("ati1", SDT);
-		 request.getRequestDispatcher("AvailableCoupons.jsp").forward(request, response); 
-		 PrintWriter out = response.getWriter();
-		 out.println("this is going to be available coupons table");
-	////	out.println(date);
-		//Date Adate = null;
-		//String SAdate=null;
-		//List<Coupon> CS2= new LinkedList<Coupon>();
-		//if(SDT != null && SDT !=""){
-			//SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-			//try {
-			//	Adate = (Date) format.parse(SDT);
-			//} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				//e.printStackTrace();
-			//}
-				//SAdate=format.format(Adate);
-				//System.out.println(format.format(Adate));
-		//	request.setAttribute("ati1", Adate);
-		//	java.sql.Date sqlDate = new java.sql.Date();
-		//	sqlDate = Adate;
-		//	PreparedStatement pst = connection.prepareStatement(sql);
-		//	pst.setDate(1, sqlDate);
-			Client client= ClientBuilder.newClient();
+		String SDAC=request.getParameter("DAC");
+		String SCT=request.getParameter("CT");
+		String SINC=request.getParameter("INC");
+		Client client= ClientBuilder.newClient();
+		
+		if(SDT != null && SDT !="" && SDAC != null && SDAC !="" && SCT != null && SCT !="" && SINC != null && SINC !="" ){
+			request.setAttribute("ati1", SDT);
+			request.getRequestDispatcher("AvailableCoupons.jsp").forward(request, response); 
+			PrintWriter out = response.getWriter();
+			out.println("this is going to be available coupons table");
+		//Client client= ClientBuilder.newClient();
 			try{
-			List<Coupon> CS2=client.target("http://localhost:8080/coupon-service/webapi/myresource/getcoupons2").queryParam("var1",SDT).request().get(new GenericType<List<Coupon>>(){});
-	    	
-	    	request.setAttribute("Avcoupons", CS2);
-	        request.getRequestDispatcher("AvailableCoupons.jsp").forward(request, response);           
-	    	}
-	    	catch(Exception e){
-	    		System.out.println("Erroooooooooor");
-	    	}
-	    	}
-		else {
-	//response.getWriter().write("enter the ID");	
-			response.sendRedirect("AvailableCoupons.jsp");
-	}
+				List<Coupon> CS2=client.target("http://localhost:8080/coupon-service/webapi/myresource/getcoupons2").queryParam("var1",SDT).queryParam("var2", SDAC).queryParam("var3", SCT).queryParam("var4", SINC).request().get(new GenericType<List<Coupon>>(){});    	
+				//System.out.println( CS2.iterator().next().CouponID); 
+				if(CS2.iterator().next()!=null){
+					request.setAttribute("Avcoupons", CS2);
+					request.getRequestDispatcher("AvailableCoupons2.jsp").forward(request, response);
+	  //      return;
+				}
+				else
+					System.out.println("No available coupon");
+	    		}
+			catch(Exception e){
+				System.out.println("Erroooooooooor"+e);
+	    		}
+	    	} 
+		if((SDT == null || SDT =="") && SDAC != null && SDAC !="" && SCT != null && SCT !="" && SINC != null && SINC !="" ){
+			//request.setAttribute("ati1", SDT);
+			//request.getRequestDispatcher("AvailableCoupons.jsp").forward(request, response); 
+			PrintWriter out = response.getWriter();
+			out.println("this is going to be available coupons table");
+		//	Client client= ClientBuilder.newClient();
+			try{
+				List<Coupon> CS2=client.target("http://localhost:8080/coupon-service/webapi/myresource/getcoupons3").queryParam("var2", SDAC).queryParam("var3", SCT).queryParam("var4", SINC).request().get(new GenericType<List<Coupon>>(){});    	
+				//System.out.println( CS2.iterator().next().CouponID); 
+				if(CS2.iterator().next()!=null){
+					request.setAttribute("Avcoupons", CS2);
+					request.getRequestDispatcher("AvailableCoupons2.jsp").forward(request, response);
+		  //      return;
+					}
+				else
+					System.out.println("No available coupon");
+		    	}
+		    catch(Exception e){
+		    	System.out.println("Erroooooooooor"+e);
+		    	}
+		}
+		if(SDT != null && SDT !="" && (SDAC == null || SDAC =="") && SCT != null && SCT !="" && SINC != null && SINC !="" )
+		{
+			try{
+				List<Coupon> CS2=client.target("http://localhost:8080/coupon-service/webapi/myresource/getcoupons4").queryParam("var1",SDT).queryParam("var3", SCT).queryParam("var4", SINC).request().get(new GenericType<List<Coupon>>(){});    	
+				//System.out.println( CS2.iterator().next().CouponID); 
+				if(CS2.iterator().next()!=null){
+					request.setAttribute("Avcoupons", CS2);
+					request.getRequestDispatcher("AvailableCoupons2.jsp").forward(request, response);
+	  //      return;
+				}
+				else
+					System.out.println("No available coupon");
+	    		}
+			catch(Exception e){
+				System.out.println("Erroooooooooor"+e);
+	    		}	
+		}
+		if(SDT != null && SDT !="" && SDAC != null && SDAC !="" && (SCT == null || SCT =="") && SINC != null && SINC !="" )
+		{
+			try{
+				List<Coupon> CS2=client.target("http://localhost:8080/coupon-service/webapi/myresource/getcoupons5").queryParam("var1",SDT).queryParam("var2", SDAC).queryParam("var4", SINC).request().get(new GenericType<List<Coupon>>(){});    	
+				//System.out.println( CS2.iterator().next().CouponID); 
+				if(CS2.iterator().next()!=null){
+					request.setAttribute("Avcoupons", CS2);
+					request.getRequestDispatcher("AvailableCoupons2.jsp").forward(request, response);
+	  //      return;
+				}
+				else
+					System.out.println("No available coupon");
+	    		}
+			catch(Exception e){
+				System.out.println("Erroooooooooor"+e);
+	    		}
+
+		}
+		if(SDT != null && SDT !="" && SDAC != null && SDAC !="" && SCT != null && SCT !="" && (SINC == null || SINC ==""))
+		{
+			try{
+				List<Coupon> CS2=client.target("http://localhost:8080/coupon-service/webapi/myresource/getcoupons6").queryParam("var1",SDT).queryParam("var2", SDAC).queryParam("var3", SCT).request().get(new GenericType<List<Coupon>>(){});    	
+				//System.out.println( CS2.iterator().next().CouponID); 
+				if(CS2.iterator().next()!=null){
+					request.setAttribute("Avcoupons", CS2);
+					request.getRequestDispatcher("AvailableCoupons2.jsp").forward(request, response);
+	  //      return;
+				}
+				else
+					System.out.println("No available coupon");
+	    		}
+			catch(Exception e){
+				System.out.println("Erroooooooooor"+e);
+	    		}
+
+		}
+		if((SDT == null || SDT =="") && (SDAC == null || SDAC =="") && SCT != null && SCT !="" && SINC != null && SINC !="" )
+		{
+			try{
+				List<Coupon> CS2=client.target("http://localhost:8080/coupon-service/webapi/myresource/getcoupons7").queryParam("var3", SCT).queryParam("var4", SINC).request().get(new GenericType<List<Coupon>>(){});    	
+				//System.out.println( CS2.iterator().next().CouponID); 
+				if(CS2.iterator().next()!=null){
+					request.setAttribute("Avcoupons", CS2);
+					request.getRequestDispatcher("AvailableCoupons2.jsp").forward(request, response);
+	  //      return;
+				}
+				else
+					System.out.println("No available coupon");
+	    		}
+			catch(Exception e){
+				System.out.println("Erroooooooooor"+e);
+	    		}
+
+		}
+		if((SDT == null || SDT =="") && SDAC != null && SDAC !="" && (SCT == null || SCT =="") && SINC != null && SINC !="" )
+		{
+			try{
+				List<Coupon> CS2=client.target("http://localhost:8080/coupon-service/webapi/myresource/getcoupons8").queryParam("var2", SDAC).queryParam("var4", SINC).request().get(new GenericType<List<Coupon>>(){});    	
+				//System.out.println( CS2.iterator().next().CouponID); 
+				if(CS2.iterator().next()!=null){
+					request.setAttribute("Avcoupons", CS2);
+					request.getRequestDispatcher("AvailableCoupons2.jsp").forward(request, response);
+	  //      return;
+				}
+				else
+					System.out.println("No available coupon");
+	    		}
+			catch(Exception e){
+				System.out.println("Erroooooooooor"+e);
+	    		}
+
+		}
+		if((SDT == null || SDT =="") && SDAC != null && SDAC !="" && SCT != null && SCT !="" && (SINC == null || SINC =="")){try{
+			List<Coupon> CS2=client.target("http://localhost:8080/coupon-service/webapi/myresource/getcoupons9").queryParam("var2", SDAC).queryParam("var3", SCT).request().get(new GenericType<List<Coupon>>(){});    	
+			//System.out.println( CS2.iterator().next().CouponID); 
+			if(CS2.iterator().next()!=null){
+				request.setAttribute("Avcoupons", CS2);
+				request.getRequestDispatcher("AvailableCoupons2.jsp").forward(request, response);
+  //      return;
+			}
+			else
+				System.out.println("No available coupon");
+    		}
+		catch(Exception e){
+			System.out.println("Erroooooooooor"+e);
+    		}
+}
+		if(SDT != null && SDT !="" && (SDAC == null || SDAC =="") && (SCT == null || SCT =="") && SINC != null && SINC !="" )
+		{
+			try{
+				List<Coupon> CS2=client.target("http://localhost:8080/coupon-service/webapi/myresource/getcoupons10").queryParam("var1",SDT).queryParam("var4", SINC).request().get(new GenericType<List<Coupon>>(){});    	
+				//System.out.println( CS2.iterator().next().CouponID); 
+				if(CS2.iterator().next()!=null){
+					request.setAttribute("Avcoupons", CS2);
+					request.getRequestDispatcher("AvailableCoupons2.jsp").forward(request, response);
+	  //      return;
+				}
+				else
+					System.out.println("No available coupon");
+	    		}
+			catch(Exception e){
+				System.out.println("Erroooooooooor"+e);
+	    		}
+
+		}
+		if(SDT != null && SDT !="" && (SDAC == null || SDAC =="") && SCT != null && SCT !="" && (SINC == null || SINC ==""))
+		{
+			try{
+				List<Coupon> CS2=client.target("http://localhost:8080/coupon-service/webapi/myresource/getcoupons11").queryParam("var1",SDT).queryParam("var3", SCT).request().get(new GenericType<List<Coupon>>(){});    	
+				//System.out.println( CS2.iterator().next().CouponID); 
+				if(CS2.iterator().next()!=null){
+					request.setAttribute("Avcoupons", CS2);
+					request.getRequestDispatcher("AvailableCoupons2.jsp").forward(request, response);
+	  //      return;
+				}
+				else
+					System.out.println("No available coupon");
+	    		}
+			catch(Exception e){
+				System.out.println("Erroooooooooor"+e);
+	    		}
+		}
+		if(SDT != null && SDT !="" && SDAC != null && SDAC !="" && (SCT == null || SCT =="") && (SINC == null || SINC ==""))
+		{
+			try{
+				List<Coupon> CS2=client.target("http://localhost:8080/coupon-service/webapi/myresource/getcoupons12").queryParam("var1",SDT).queryParam("var2", SDAC).request().get(new GenericType<List<Coupon>>(){});    	
+				//System.out.println( CS2.iterator().next().CouponID); 
+				if(CS2.iterator().next()!=null){
+					request.setAttribute("Avcoupons", CS2);
+					request.getRequestDispatcher("AvailableCoupons2.jsp").forward(request, response);
+	  //      return;
+				}
+				else
+					System.out.println("No available coupon");
+	    		}
+			catch(Exception e){
+				System.out.println("Erroooooooooor"+e);
+	    		}
+	
+		}
+		if((SDT == null || SDT =="") && (SDAC == null || SDAC =="") && (SCT == null || SCT =="") && SINC != null && SINC !="")
+		{
+			try{
+				List<Coupon> CS2=client.target("http://localhost:8080/coupon-service/webapi/myresource/getcoupons13").queryParam("var4", SINC).request().get(new GenericType<List<Coupon>>(){});    	
+				//System.out.println( CS2.iterator().next().CouponID); 
+				if(CS2.iterator().next()!=null){
+					request.setAttribute("Avcoupons", CS2);
+					request.getRequestDispatcher("AvailableCoupons2.jsp").forward(request, response);
+	  //      return;
+				}
+				else
+					System.out.println("No available coupon");
+	    		}
+			catch(Exception e){
+				System.out.println("Erroooooooooor"+e);
+	    		}
+		}
+		if((SDT == null || SDT =="") && (SDAC == null || SDAC =="") && SCT != null && SCT !="" && (SINC == null || SINC ==""))
+		{
+			try{
+				List<Coupon> CS2=client.target("http://localhost:8080/coupon-service/webapi/myresource/getcoupons14").queryParam("var3", SCT).request().get(new GenericType<List<Coupon>>(){});    	
+				//System.out.println( CS2.iterator().next().CouponID); 
+				if(CS2.iterator().next()!=null){
+					request.setAttribute("Avcoupons", CS2);
+					request.getRequestDispatcher("AvailableCoupons2.jsp").forward(request, response);
+	  //      return;
+				}
+				else
+					System.out.println("No available coupon");
+	    		}
+			catch(Exception e){
+				System.out.println("Erroooooooooor"+e);
+	    		}
+		}
+		if((SDT == null || SDT =="") && SDAC != null && SDAC !="" && (SCT == null || SCT =="") && (SINC == null || SINC ==""))
+		{
+			try{
+				List<Coupon> CS2=client.target("http://localhost:8080/coupon-service/webapi/myresource/getcoupons15").queryParam("var2", SDAC).request().get(new GenericType<List<Coupon>>(){});    	
+				//System.out.println( CS2.iterator().next().CouponID); 
+				if(CS2.iterator().next()!=null){
+					request.setAttribute("Avcoupons", CS2);
+					request.getRequestDispatcher("AvailableCoupons2.jsp").forward(request, response);
+	  //      return;
+				}
+				else
+					System.out.println("No available coupon");
+	    		}
+			catch(Exception e){
+				System.out.println("Erroooooooooor"+e);
+	    		}
+
+		}
+		if(SDT != null && SDT !="" && (SDAC == null || SDAC =="") && (SCT == null || SCT =="") && (SINC == null || SINC ==""))
+		{
+			try{
+				List<Coupon> CS2=client.target("http://localhost:8080/coupon-service/webapi/myresource/getcoupons16").queryParam("var1",SDT).request().get(new GenericType<List<Coupon>>(){});    	
+				//System.out.println( CS2.iterator().next().CouponID); 
+				if(CS2.iterator().next()!=null){
+					request.setAttribute("Avcoupons", CS2);
+					request.getRequestDispatcher("AvailableCoupons2.jsp").forward(request, response);
+	  //      return;
+				}
+				else
+					System.out.println("No available coupon");
+	    		}
+			catch(Exception e){
+				System.out.println("Erroooooooooor"+e);
+	    		}
+		}
+		//we have to not let the customer to have the option for not entering any information, because if so, all the coupons will be shown!! :|
+		else
+		{
+			
+		}
 	}
 
 	/**

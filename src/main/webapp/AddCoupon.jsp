@@ -8,7 +8,7 @@
 <body>
 	<div style="padding-left:100px;font-family: monospace;">
 		<h2>Create Coupon</h2>
-		<form action="" method="POST">
+		<form action="http://localhost:8080/coupon-service/webapi/myresource/CreateCoupon" method="POST">
 			<div style="width: 200px; text-align: left;">
 				<div style="padding:10px;">
 					Coupon ID: <input name="ID" />

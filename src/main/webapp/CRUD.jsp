@@ -14,7 +14,7 @@
 		/* http://css-tricks.com/perfect-full-page-background-image/ */
 		html {
 			/*background: url("/Peanuts.jpg") no-repeat center center fixed; */
-			background-image: url('http://localhost:8080/coupon-service/Peanuts.jpg');
+			background-image: url('http://localhost:8080/coupon-service/Coupons.jpg');
 			-webkit-background-size: cover;
 			-moz-background-size: cover;
 			-o-background-size: cover;

@@ -14,43 +14,42 @@
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 </head>
 <body>
-
 <div class="container">
   <h2>Available Coupons for a certain date</h2>
   <form role="form" action="AvailableCoupons">
     <div class="form-group">
-      <label for="couponID">CouponID:</label>
+      <label for="Coupon Time">Available coupon for this time:</label>
       <input type="date" class="form-control" id="DT" name="DT" placeholder="Enter Date" value="${DT}">
+    </div>                                       
+
+<div class="form-element-left">
+<label>Available Coupons of this Type:</label>
+<select name="school_type" class="required" id="school_type">
+  <option value="" disabled="disabled" selected="selected"></option>
+  <option value="public">Public School</option>
+  <option value="private">Private School</option>
+  <option value="home">Home School</option>
+  <option value="other">Other</option>
+</select>
+</div>
+
+       
+<div id="Pdiscount" class="form-element-right hidden">
+<label for="Pdiscount">Please specify discount amount</label>
+<input type="text" name="Pdiscount" id="Pdiscount" placeholder="Discount Amount" maxlength="200">
+</div>
+<div class="clear"></div> 
+ 
+    <div class="form-group">
+      <label for="Item Name">Available coupon for this item:</label>
+      <input type="text" class="form-control" id="INC" name="INC" placeholder="Item name" value="${INC}">
     </div>
   <button type="submit" class="btn btn-default">Submit</button>
   <input type="text" class="form-control" id="ati1" name="ati1" value="${ati1}">
- <% 
- try{
- List<Coupon> eList = new LinkedList<Coupon>();
- eList = (List<Coupon>)request.getAttribute("Avcoupons"); 
- out.println("<table>");	
- while(eList.iterator().hasNext())
- {
-	 Coupon c=new Coupon();
-	 c=(Coupon)eList.iterator().next();
-	 out.print("<tr>");
-	 	out.print("<tr>"+c.CouponID+"</tr>");
-	 	out.print("<tr>"+c.Discount+"</tr>");
-	 	out.print("<tr>"+c.ItemID+"</tr>");
-	 	out.print("<tr>"+c.Itemname+"</tr>");
-	 	out.print("<tr>"+c.getValidTime1()+"</tr>");
-	 	out.print("<tr>"+c.getValidTime2()+"</tr>");
-	 	out.print("</tr>");	 
- }
- out.println("</table>");
- }
- catch(Exception e)
- {
-	 System.out.println("Error");
- }
- 	%>
 </form>
  </div>
 

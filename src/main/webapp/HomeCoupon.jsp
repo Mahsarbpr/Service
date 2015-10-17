@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<html>
 <head>
 	<title>Bootstrap In Practice - Landing Page Example</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,11 +9,11 @@
 	<link href="http://fonts.googleapis.com/css?family=Abel|Open+Sans:400,600" rel="stylesheet" />
 
 	<style>
-
 		/* http://css-tricks.com/perfect-full-page-background-image/ */
 		html {
-			/*background-image: url("/Peanuts.jpg") no-repeat center center fixed;*/
-			/*background-image: url('../images/Peanuts.jpg'); */
+			/*background-image: url("b8.jpg") no-repeat center center fixed;*/
+			background-image: url("Coupons.jpg");
+			/*background-image: linear-gradient(to bottom,white , green);*/
 			-webkit-background-size: cover;
 			-moz-background-size: cover;
 			-o-background-size: cover;
@@ -46,6 +45,7 @@
 	</style>
 
 </head>
+<html>
 <body>
 
 	<div class="container">

@@ -39,23 +39,23 @@ public class ComputePrice extends HttpServlet {
 	String Spitem2= request.getParameter("pitm2");
 	
 	if(Sitem != null && Sitem !="" && Sitem2 != null && Sitem2 !="" && Spitem1 != null && Spitem1 !="" && Spitem2 != null && Spitem2 !=""){
-		int Iitem= Integer.parseInt(Sitem); //error handling if ID is null, how to?
-		int Iitem2= Integer.parseInt(Sitem2);
+		//int Iitem= Integer.parseInt(Sitem); //error handling if ID is null, how to?
+		//int Iitem2= Integer.parseInt(Sitem2);
 		int Ipitem1= Integer.parseInt(Spitem1);
 		int Ipitem2= Integer.parseInt(Spitem2);
 
 		try{
 			PrintWriter out = response.getWriter();//chi kar mikone?
 		Client client= ClientBuilder.newClient();
-		Coupon cc=client.target("http://localhost:8080/coupon-service/webapi/myresource/get").queryParam("var",Iitem).request().get(Coupon.class);
-		Coupon cc2=client.target("http://localhost:8080/coupon-service/webapi/myresource/get").queryParam("var",Iitem2).request().get(Coupon.class);
+		Coupon cc=client.target("http://localhost:8080/coupon-service/webapi/myresource/FindCouponForItem").queryParam("var",Sitem).request().get(Coupon.class);
+		Coupon cc2=client.target("http://localhost:8080/coupon-service/webapi/myresource/FindCouponForItem").queryParam("var",Sitem2).request().get(Coupon.class);
 		
 		double totalprice= Ipitem1*cc.Discount + Ipitem2*cc2.Discount;
 		String Stp= Double.toString(totalprice);
 		//out.println(Stp);
-		request.setAttribute("itm1", Iitem);
+		request.setAttribute("itm1", Sitem);
 		request.setAttribute("pitm1", Ipitem1);
-		request.setAttribute("itm2", Iitem2);
+		request.setAttribute("itm2", Sitem2);
 		request.setAttribute("pitm2", Ipitem2);
 		request.setAttribute("tp", Stp);
 		request.getRequestDispatcher("Cart1.jsp").forward(request, response); 
