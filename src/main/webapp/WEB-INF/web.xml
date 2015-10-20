@@ -85,4 +85,14 @@
     <servlet-name>login</servlet-name>
     <url-pattern>/login</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AddSingleCoupon</display-name>
+    <servlet-name>AddSingleCoupon</servlet-name>
+    <servlet-class>couponModel.AddSingleCoupon</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddSingleCoupon</servlet-name>
+    <url-pattern>/AddSingleCoupon</url-pattern>
+  </servlet-mapping>
 </web-app>

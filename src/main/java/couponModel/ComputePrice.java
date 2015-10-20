@@ -2,6 +2,8 @@ package couponModel;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Collections;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.core.GenericType;
 
 import com.coupon.Coupon;
 
@@ -26,7 +29,7 @@ public class ComputePrice extends HttpServlet {
         super();
         // TODO Auto-generated constructor stub
     }
-
+//private FindBestDiscount
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -39,20 +42,28 @@ public class ComputePrice extends HttpServlet {
 	String Spitem2= request.getParameter("pitm2");
 	
 	if(Sitem != null && Sitem !="" && Sitem2 != null && Sitem2 !="" && Spitem1 != null && Spitem1 !="" && Spitem2 != null && Spitem2 !=""){
-		//int Iitem= Integer.parseInt(Sitem); //error handling if ID is null, how to?
-		//int Iitem2= Integer.parseInt(Sitem2);
 		int Ipitem1= Integer.parseInt(Spitem1);
 		int Ipitem2= Integer.parseInt(Spitem2);
-
+		
 		try{
 			PrintWriter out = response.getWriter();//chi kar mikone?
 		Client client= ClientBuilder.newClient();
-		Coupon cc=client.target("http://localhost:8080/coupon-service/webapi/myresource/FindCouponForItem").queryParam("var",Sitem).request().get(Coupon.class);
-		Coupon cc2=client.target("http://localhost:8080/coupon-service/webapi/myresource/FindCouponForItem").queryParam("var",Sitem2).request().get(Coupon.class);
+		List<Coupon> cc=client.target("http://localhost:8080/coupon-service/webapi/myresource/FindCouponForItem").queryParam("var",Sitem).request().get(new GenericType<List<Coupon>>(){});
+		List<Coupon> cc2=client.target("http://localhost:8080/coupon-service/webapi/myresource/FindCouponForItem").queryParam("var",Sitem2).request().get(new GenericType<List<Coupon>>(){});
 		
-		double totalprice= Ipitem1*cc.Discount + Ipitem2*cc2.Discount;
+		Double DM1=null;
+		int i=0;
+		List<Coupon> cc1=cc;
+		while(cc1.iterator().hasNext()){
+			if(cc1.get(i).getDiscount()<DM1){
+				DM1=cc1.get(i).getDiscount();
+				i++;
+			}
+		}
+		out.println(DM1);
+		
+		double totalprice= Ipitem1*cc.get(0).Discount + Ipitem2*cc2.get(0).Discount;
 		String Stp= Double.toString(totalprice);
-		//out.println(Stp);
 		request.setAttribute("itm1", Sitem);
 		request.setAttribute("pitm1", Ipitem1);
 		request.setAttribute("itm2", Sitem2);
